@@ -616,28 +616,21 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     });
   });
 
-  /* ---------- Generated music: mangala vadyam — nadaswaram melody in raga Hamsadhwani with thavil and ottu drone ---------- */
+  /* ---------- Generated music (three styles; preview with ?music=flute | veena | nadaswaram) ---------- */
   var Music = (function () {
-    var ctx, master, wet, timer, nadVoice, nadGain, nadLfoDepth;
-    var nextNote = 0, noteStep = 0, nextDrum = 0, drumStep = 0;
-    var beat = 60 / 84, SA = 293.66; // D4
-    // Hamsadhwani: S R2 G3 P N3 (0 2 4 7 11), eight-beat Adi talam cycles
-    var c1 = [[12,1.5],[11,.5],[12,1],[14,1],[16,2],[14,1],[12,1]];
-    var c2 = [[11,1],[12,.5],[11,.5],[7,1],[4,1],[2,1],[4,1],[7,2]];
-    var c3 = [[4,1],[7,1],[11,1],[12,1],[11,.5],[12,.5],[14,1],[12,2]];
-    var c4 = [[11,1],[7,1],[4,1],[2,1],[0,3],[null,1]];
-    var c5 = [[12,1],[14,1],[16,1],[19,1],[16,2],[14,1],[12,1]];
-    var c6 = [[14,.5],[16,.5],[14,1],[12,1],[11,1],[12,2],[11,1],[7,1]];
-    var song = [].concat(c1, c2, c3, c4, c5, c6, c3, c4);
-    // thavil: 16 half-beat slots per cycle. D = low (left hand), T = open right, t = stick
-    var thavil = "D.ttT.tDD.ttTtTt";
+    var STYLE = (function () {
+      var m = new URLSearchParams(location.search).get("music");
+      return /^(flute|veena|nadaswaram)$/.test(m) ? m : "flute";
+    })();
+    var SA = 293.66; // D4
     function hz(semi) { return SA * Math.pow(2, semi / 12); }
+    var ctx, master, wet, timer, engine;
 
-    function impulse(seconds) {
+    function impulse(seconds, decay) {
       var len = ctx.sampleRate * seconds, buf = ctx.createBuffer(2, len, ctx.sampleRate);
       for (var c = 0; c < 2; c++) {
         var d = buf.getChannelData(c);
-        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
       }
       return buf;
     }
@@ -645,83 +638,218 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
       node.connect(master);
       var s = ctx.createGain(); s.gain.value = sendAmt; node.connect(s); s.connect(wet);
     }
-    function reedChain(dest) {
-      var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 250;
-      var f1 = ctx.createBiquadFilter(); f1.type = "peaking"; f1.frequency.value = 1150; f1.Q.value = 1.4; f1.gain.value = 9;
-      var f2 = ctx.createBiquadFilter(); f2.type = "peaking"; f2.frequency.value = 2600; f2.Q.value = 2; f2.gain.value = 6;
-      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 4200;
-      hp.connect(f1); f1.connect(f2); f2.connect(lp); lp.connect(dest);
-      return hp;
+    function noiseBuffer(seconds) {
+      var len = ctx.sampleRate * seconds, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+      for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      return buf;
     }
-    function buildNadaswaram() {
-      nadGain = ctx.createGain(); nadGain.gain.value = 0;
-      var input = reedChain(nadGain);
-      var lfo = ctx.createOscillator(); lfo.frequency.value = 5.6;
-      nadLfoDepth = ctx.createGain(); nadLfoDepth.gain.value = 0;
-      lfo.connect(nadLfoDepth);
-      nadVoice = [["sawtooth", 1, .55], ["square", 1.003, .3]].map(function (v) {
-        var o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = v[0]; o.frequency.value = SA * v[1]; g.gain.value = v[2];
-        nadLfoDepth.connect(o.detune);
-        o.connect(g); g.connect(input); o.start();
-        return { osc: o, ratio: v[1] };
+
+    /* Tanpura: Pa – Sa' – Sa' – Sa, each string with a shimmering jivari buzz */
+    function tanpura(freq, t, vol) {
+      var g = ctx.createGain(), bp = ctx.createBiquadFilter();
+      bp.type = "bandpass"; bp.Q.value = 3;
+      bp.frequency.setValueAtTime(2800, t);
+      bp.frequency.exponentialRampToValueAtTime(500, t + 3);
+      [-4, 4].forEach(function (cents) {
+        var o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = freq; o.detune.value = cents;
+        o.connect(bp); o.start(t); o.stop(t + 4.6);
       });
-      lfo.start();
-      route(nadGain, .35);
+      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 700;
+      var body = ctx.createOscillator(); body.type = "triangle"; body.frequency.value = freq;
+      body.connect(lp); lp.connect(g); body.start(t); body.stop(t + 4.6);
+      bp.connect(g);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(vol, t + .04);
+      g.gain.exponentialRampToValueAtTime(.0006, t + 4.5);
+      route(g, .6);
     }
-    function buildOttu() {
-      var g = ctx.createGain(); g.gain.value = .022;
-      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900;
-      [hz(-12), hz(-5)].forEach(function (f, i) {
-        var o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = f; o.detune.value = i ? 3 : -3;
-        o.connect(lp); o.start();
-      });
-      lp.connect(g); route(g, .4);
-    }
-    function playNote(n, t) {
-      var len = n[1] * beat, vol = .11;
-      if (n[0] === null) { nadGain.gain.setTargetAtTime(0, t, .05); return; }
-      var f = hz(n[0]);
-      nadVoice.forEach(function (v) { v.osc.frequency.setTargetAtTime(f * v.ratio, t, .035); });
-      nadGain.gain.setTargetAtTime(vol * .55, t, .012);
-      nadGain.gain.setTargetAtTime(vol, t + .05, .05);
-      nadLfoDepth.gain.cancelScheduledValues(t);
-      nadLfoDepth.gain.setValueAtTime(0, t);
-      if (n[1] >= 1.5) nadLfoDepth.gain.linearRampToValueAtTime(22, t + len * .9);
-    }
-    function drum(kind, t) {
+    function bell(t) {
       var g = ctx.createGain();
-      if (kind === "t") {
-        var len = Math.floor(ctx.sampleRate * .08), buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
-        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
-        var src = ctx.createBufferSource(), bp = ctx.createBiquadFilter();
-        src.buffer = buf; bp.type = "bandpass"; bp.frequency.value = 3200; bp.Q.value = 1.2;
-        g.gain.value = .22; src.connect(bp); bp.connect(g); src.start(t);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(.05, t + .005);
+      g.gain.exponentialRampToValueAtTime(.0005, t + 3.5);
+      [[1, 1], [2.76, .45], [5.4, .2], [8.9, .08]].forEach(function (p) {
+        var o = ctx.createOscillator(), pg = ctx.createGain();
+        o.frequency.value = hz(24) * p[0]; pg.gain.value = p[1];
+        o.connect(pg); pg.connect(g); o.start(t); o.stop(t + 3.6);
+      });
+      route(g, .8);
+    }
+    function pluck(freq, t, dur, vol, glide) {
+      var out = ctx.createGain(), lp = ctx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.setValueAtTime(freq * 7, t);
+      lp.frequency.exponentialRampToValueAtTime(freq * 1.8, t + dur);
+      [["triangle", 1, 1], ["sine", 2, .35], ["sine", 3, .12]].forEach(function (h) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = h[0];
+        var f = freq * h[1];
+        if (glide) {
+          o.frequency.setValueAtTime(f / Math.pow(2, 1 / 12), t);
+          o.frequency.linearRampToValueAtTime(f, t + .16);
+        } else o.frequency.setValueAtTime(f, t);
+        g.gain.value = h[2];
+        o.connect(g); g.connect(lp);
+        o.start(t); o.stop(t + dur + 2);
+      });
+      out.gain.setValueAtTime(0, t);
+      out.gain.linearRampToValueAtTime(vol, t + .012);
+      out.gain.exponentialRampToValueAtTime(.0008, t + dur + 1.9);
+      lp.connect(out); route(out, .55);
+    }
+
+    /* A sustained, gliding melodic voice (flute or nadaswaram) */
+    function legatoVoice(kind) {
+      var v = { gain: ctx.createGain(), vib: ctx.createGain(), oscs: [] };
+      v.gain.gain.value = 0;
+      var lfo = ctx.createOscillator(); lfo.frequency.value = kind === "flute" ? 4.6 : 5.6;
+      v.vib.gain.value = 0; lfo.connect(v.vib); lfo.start();
+      var input;
+      if (kind === "flute") {
+        var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
+        lp.connect(v.gain); input = lp;
+        [["sine", 1, .8], ["triangle", 2, .07], ["sine", 3, .03]].forEach(function (h) { addOsc(h); });
+        var n = ctx.createBufferSource(); n.buffer = noiseBuffer(2); n.loop = true;
+        var bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800; bp.Q.value = .8;
+        var ng = ctx.createGain(); ng.gain.value = .05;
+        n.connect(bp); bp.connect(ng); ng.connect(v.gain); n.start();
       } else {
-        var o = ctx.createOscillator(), lo = kind === "D";
-        o.type = "sine";
-        o.frequency.setValueAtTime(lo ? 120 : 260, t);
-        o.frequency.exponentialRampToValueAtTime(lo ? 58 : 200, t + (lo ? .3 : .12));
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(lo ? .5 : .28, t + .005);
-        g.gain.exponentialRampToValueAtTime(.001, t + (lo ? .45 : .2));
-        o.connect(g); o.start(t); o.stop(t + .5);
+        var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 250;
+        var f1 = ctx.createBiquadFilter(); f1.type = "peaking"; f1.frequency.value = 1150; f1.Q.value = 1.4; f1.gain.value = 9;
+        var f2 = ctx.createBiquadFilter(); f2.type = "peaking"; f2.frequency.value = 2600; f2.Q.value = 2; f2.gain.value = 6;
+        var lp2 = ctx.createBiquadFilter(); lp2.type = "lowpass"; lp2.frequency.value = 4200;
+        hp.connect(f1); f1.connect(f2); f2.connect(lp2); lp2.connect(v.gain); input = hp;
+        [["sawtooth", 1, .55], ["square", 1.003, .3]].forEach(function (h) { addOsc(h); });
       }
-      route(g, .15);
+      function addOsc(h) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = h[0]; o.frequency.value = SA * h[1]; g.gain.value = h[2];
+        v.vib.connect(o.detune); o.connect(g); g.connect(input); o.start();
+        v.oscs.push({ osc: o, ratio: h[1] });
+      }
+      route(v.gain, kind === "flute" ? .6 : .35);
+      v.play = function (semi, t, len, vol, vibDepth, glideTc) {
+        if (semi === null) { v.gain.gain.setTargetAtTime(0, t, .12); return; }
+        var f = hz(semi);
+        v.oscs.forEach(function (o) { o.osc.frequency.setTargetAtTime(f * o.ratio, t, glideTc); });
+        v.gain.gain.setTargetAtTime(vol * .6, t, .015);
+        v.gain.gain.setTargetAtTime(vol, t + .06, .08);
+        v.vib.gain.cancelScheduledValues(t);
+        v.vib.gain.setValueAtTime(0, t);
+        if (len > 1.2) v.vib.gain.linearRampToValueAtTime(vibDepth, t + len * .9);
+      };
+      return v;
     }
-    function schedule() {
-      var horizon = ctx.currentTime + .3;
-      while (nextNote < horizon) {
-        var n = song[noteStep++ % song.length];
-        playNote(n, nextNote);
-        nextNote += n[1] * beat;
+
+    var ENGINES = {
+      /* Slow bansuri in raga Kalyani (S R2 G3 M2 P D2 N3) with tanpura and a temple bell */
+      flute: function () {
+        var beat = 60 / 56;
+        var song = [
+          [7,2],[9,1],[11,1],[12,3],[null,1],
+          [11,1],[9,1],[7,1],[6,1],[4,3],[null,1],
+          [4,1],[6,1],[7,2],[9,1],[7,1],[6,1],[4,1],
+          [2,1],[4,1],[2,1],[0,4],[null,1],
+          [12,2],[14,1],[16,1],[14,2],[12,1],[11,1],
+          [9,1],[11,1],[9,1],[7,1],[6,1],[7,3],
+          [9,2],[7,1],[6,1],[4,2],[2,1],[4,1],
+          [2,1],[0,1],[-1,1],[0,4],[null,1]
+        ];
+        var voice = legatoVoice("flute"), i = 0, next = 0, beatCount = 0, tNext = 0, tStep = 0;
+        var strings = [hz(-5), hz(0), hz(0), hz(-12)];
+        return {
+          reset: function (t) { next = tNext = t; },
+          schedule: function (h) {
+            while (next < h) {
+              var n = song[i++ % song.length], len = n[1] * beat;
+              if (beatCount % 16 === 0) bell(next);
+              voice.play(n[0], next, len, .17, 14, .07);
+              next += len; beatCount += n[1];
+            }
+            while (tNext < h) { tanpura(strings[tStep++ % 4] / 2, tNext, .045); tNext += beat * 1.1; }
+          }
+        };
+      },
+      /* Veena in raga Mohanam (S R2 G3 P D2) with tanpura */
+      veena: function () {
+        var beat = 60 / 60;
+        var song = [].concat(
+          [[4,1],[7,1],[9,1],[12,2],[9,.5],[7,.5],[4,1],[2,1],[4,2],[null,2]],
+          [[7,1],[9,1],[12,1],[14,1],[16,2],[14,1],[12,1],[9,2],[7,2],[null,2]],
+          [[12,1],[9,.5],[7,.5],[4,1],[7,1],[9,2],[7,1],[4,1],[2,2],[0,1],[2,1],[4,2],[null,2]],
+          [[0,1],[-3,1],[0,1],[2,1],[4,2],[2,1],[0,1],[-3,2],[0,3],[null,3]]
+        );
+        var i = 0, next = 0, tNext = 0, tStep = 0, strings = [hz(-5), hz(0), hz(0), hz(-12)];
+        return {
+          reset: function (t) { next = tNext = t; },
+          schedule: function (h) {
+            while (next < h) {
+              var n = song[i++ % song.length], len = n[1] * beat;
+              if (n[0] !== null) pluck(hz(n[0]), next, len, .16, n[1] >= 2);
+              next += len;
+            }
+            while (tNext < h) { tanpura(strings[tStep++ % 4] / 2, tNext, .04); tNext += beat * 1.2; }
+          }
+        };
+      },
+      /* Mangala vadyam: nadaswaram in raga Hamsadhwani with thavil */
+      nadaswaram: function () {
+        var beat = 60 / 84;
+        var song = [
+          [12,1.5],[11,.5],[12,1],[14,1],[16,2],[14,1],[12,1],
+          [11,1],[12,.5],[11,.5],[7,1],[4,1],[2,1],[4,1],[7,2],
+          [4,1],[7,1],[11,1],[12,1],[11,.5],[12,.5],[14,1],[12,2],
+          [11,1],[7,1],[4,1],[2,1],[0,3],[null,1],
+          [12,1],[14,1],[16,1],[19,1],[16,2],[14,1],[12,1],
+          [14,.5],[16,.5],[14,1],[12,1],[11,1],[12,2],[11,1],[7,1],
+          [4,1],[7,1],[11,1],[12,1],[11,.5],[12,.5],[14,1],[12,2],
+          [11,1],[7,1],[4,1],[2,1],[0,3],[null,1]
+        ];
+        var thavil = "D.ttT.tDD.ttTtTt";
+        var voice = legatoVoice("nadaswaram"), i = 0, next = 0, dNext = 0, dStep = 0;
+        var ottu = ctx.createGain(); ottu.gain.value = .022;
+        var olp = ctx.createBiquadFilter(); olp.type = "lowpass"; olp.frequency.value = 900;
+        [hz(-12), hz(-5)].forEach(function (f, k) {
+          var o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = f; o.detune.value = k ? 3 : -3;
+          o.connect(olp); o.start();
+        });
+        olp.connect(ottu); route(ottu, .4);
+        function drum(kind, t) {
+          var g = ctx.createGain();
+          if (kind === "t") {
+            var src = ctx.createBufferSource(), bp = ctx.createBiquadFilter();
+            src.buffer = noiseBuffer(.08); bp.type = "bandpass"; bp.frequency.value = 3200; bp.Q.value = 1.2;
+            g.gain.setValueAtTime(.22, t); g.gain.exponentialRampToValueAtTime(.001, t + .07);
+            src.connect(bp); bp.connect(g); src.start(t);
+          } else {
+            var o = ctx.createOscillator(), lo = kind === "D";
+            o.frequency.setValueAtTime(lo ? 120 : 260, t);
+            o.frequency.exponentialRampToValueAtTime(lo ? 58 : 200, t + (lo ? .3 : .12));
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(lo ? .5 : .28, t + .005);
+            g.gain.exponentialRampToValueAtTime(.001, t + (lo ? .45 : .2));
+            o.connect(g); o.start(t); o.stop(t + .5);
+          }
+          route(g, .15);
+        }
+        return {
+          reset: function (t) { next = dNext = t; },
+          schedule: function (h) {
+            while (next < h) {
+              var n = song[i++ % song.length], len = n[1] * beat;
+              voice.play(n[0], next, len, .11, 22, .035);
+              next += len;
+            }
+            while (dNext < h) {
+              var k = thavil[dStep++ % thavil.length];
+              if (k !== ".") drum(k, dNext);
+              dNext += beat / 2;
+            }
+          }
+        };
       }
-      while (nextDrum < horizon) {
-        var k = thavil[drumStep++ % thavil.length];
-        if (k !== ".") drum(k, nextDrum);
-        nextDrum += beat / 2;
-      }
-    }
+    };
+
     function start() {
       if (!ctx) {
         try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
@@ -731,16 +859,18 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
         master = ctx.createGain(); master.gain.value = 0;
         var comp = ctx.createDynamicsCompressor();
         master.connect(comp); comp.connect(ctx.destination);
-        var rev = ctx.createConvolver(); rev.buffer = impulse(2.4);
-        wet = ctx.createGain(); wet.gain.value = .45; wet.connect(rev); rev.connect(master);
-        buildNadaswaram(); buildOttu();
+        var rev = ctx.createConvolver(); rev.buffer = impulse(STYLE === "nadaswaram" ? 2.4 : 4, 3);
+        wet = ctx.createGain(); wet.gain.value = STYLE === "nadaswaram" ? .45 : .6;
+        wet.connect(rev); rev.connect(master);
+        engine = ENGINES[STYLE]();
+        engine.reset(ctx.currentTime + .2);
       }
       if (ctx.state === "suspended") ctx.resume();
       master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setTargetAtTime(.8, ctx.currentTime, .6);
+      master.gain.setTargetAtTime(.85, ctx.currentTime, .9);
       if (!timer) {
-        nextNote = nextDrum = Math.max(nextNote, ctx.currentTime + .15);
-        timer = setInterval(schedule, 100); schedule();
+        timer = setInterval(function () { engine.schedule(ctx.currentTime + .35); }, 100);
+        engine.schedule(ctx.currentTime + .35);
       }
       return true;
     }
@@ -748,7 +878,9 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
       if (!ctx) return;
       clearInterval(timer); timer = null;
       master.gain.setTargetAtTime(0, ctx.currentTime, .15);
-      setTimeout(function () { if (!timer) ctx.suspend(); }, 600);
+      setTimeout(function () {
+        if (!timer) ctx.suspend().then(function () { engine.reset(ctx.currentTime + .2); });
+      }, 600);
     }
     return { start: start, stop: stop, playing: function () { return !!timer; } };
   })();
