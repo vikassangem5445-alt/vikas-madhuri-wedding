@@ -34,13 +34,45 @@
   --font-sans: "Jost", "Noto Serif Telugu", system-ui, -apple-system, sans-serif;
   --font-telugu: "Noto Serif Telugu", "Kohinoor Telugu", "Gautami", serif;
   --rg-dark: linear-gradient(135deg, oklch(64% .09 38), oklch(50% .1 22) 55%, oklch(40% .085 15));
-  --rg-light: linear-gradient(135deg, oklch(95% .03 60), oklch(84% .06 40) 55%, oklch(72% .08 28));
-  --silk: radial-gradient(ellipse at 50% 0%, oklch(64% .08 28) 0%, oklch(48% .085 18) 45%, var(--wine) 100%);
+  --rg-light: linear-gradient(135deg, oklch(98% .015 60), oklch(90% .045 45) 55%, oklch(81% .065 35));
+  --silk: radial-gradient(ellipse at 50% 0%, oklch(56% .08 26) 0%, oklch(43% .085 18) 45%, var(--wine) 100%);
+  --edge: oklch(84% .06 40);
+  --petal1: oklch(88% .05 15);
+  --petal2: oklch(72% .09 15);
   --lattice-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23B9786A' stroke-opacity='.10'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E");
   --lattice-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23F3D6C8' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E");
   --shadow: 0 18px 50px -18px color-mix(in oklab, var(--rose-deep) 55%, transparent);
   color-scheme: light;
 }
+/* Alternative palettes, previewed with ?theme=maroon | green | blue */
+:root[data-palette="maroon"] {
+  --paper: oklch(97% .018 85); --blush: oklch(94.5% .03 80); --rose: oklch(70% .1 78); --rose-deep: oklch(42% .12 25);
+  --wine: oklch(26% .08 20); --ink: oklch(27% .05 30); --muted: oklch(45% .05 40); --cream: oklch(95% .04 85);
+  --rg-dark: linear-gradient(135deg, oklch(52% .13 35), oklch(42% .13 25) 55%, oklch(34% .1 20));
+  --rg-light: linear-gradient(135deg, oklch(96% .04 90), oklch(85% .11 85) 55%, oklch(74% .12 75));
+  --silk: radial-gradient(ellipse at 50% 0%, oklch(42% .13 25) 0%, oklch(33% .11 22) 45%, var(--wine) 100%);
+  --edge: oklch(82% .11 82); --petal1: oklch(92% .08 90); --petal2: oklch(75% .12 75);
+  --lattice-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23E3C27A' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E"); --lattice-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23B0803A' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+:root[data-palette="green"] {
+  --paper: oklch(97.5% .012 120); --blush: oklch(94.5% .03 150); --rose: oklch(70% .1 80); --rose-deep: oklch(40% .11 22);
+  --wine: oklch(26% .055 165); --ink: oklch(27% .04 160); --muted: oklch(44% .04 160); --cream: oklch(95% .04 90);
+  --rg-dark: linear-gradient(135deg, oklch(52% .13 35), oklch(42% .13 25) 55%, oklch(34% .1 20));
+  --rg-light: linear-gradient(135deg, oklch(96% .04 90), oklch(85% .11 85) 55%, oklch(74% .12 75));
+  --silk: radial-gradient(ellipse at 50% 0%, oklch(43% .08 160) 0%, oklch(33% .065 162) 45%, var(--wine) 100%);
+  --edge: oklch(82% .11 82); --petal1: oklch(92% .08 90); --petal2: oklch(75% .12 75);
+  --lattice-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23E3C27A' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E"); --lattice-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%236E9A7E' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+:root[data-palette="blue"] {
+  --paper: oklch(96% .017 85); --blush: oklch(94.5% .02 250); --rose: oklch(74% .09 82); --rose-deep: oklch(38% .11 260);
+  --wine: oklch(25% .06 260); --ink: oklch(25% .05 260); --muted: oklch(45% .05 260); --cream: oklch(92% .05 88);
+  --rg-dark: linear-gradient(135deg, oklch(50% .14 260), oklch(38% .11 260) 55%, oklch(28% .07 260));
+  --rg-light: linear-gradient(135deg, oklch(96% .04 90), oklch(84% .09 84) 55%, oklch(70% .09 76));
+  --silk: radial-gradient(ellipse at 50% 0%, oklch(42% .13 260) 0%, oklch(32% .1 260) 45%, var(--wine) 100%);
+  --edge: oklch(80% .09 82); --petal1: oklch(92% .07 90); --petal2: oklch(74% .09 80);
+  --lattice-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23C8A45D' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E"); --lattice-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%231E3F9E' stroke-opacity='.13'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24Z'/%3E%3Ccircle cx='24' cy='24' r='8'/%3E%3Cpath d='M24 16 Q30 24 24 32 Q18 24 24 16Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
@@ -87,32 +119,37 @@ button { font: inherit; }
 /* ---------- Cover doors ---------- */
 #cover { position: fixed; inset: 0; z-index: 50; perspective: 1400px; height: 100vh; height: 100dvh; }
 .door { position: absolute; top: 0; bottom: 0; width: 50%; transition: transform 1.3s cubic-bezier(.7,0,.2,1); }
-.door::before, .door::after { content: ""; position: absolute; border: 1px solid oklch(84% .06 40 / .35); }
+.door::before, .door::after { content: ""; position: absolute; border: 1px solid color-mix(in oklab, var(--edge) 35%, transparent); }
 .door::before { inset: .9rem; }
-.door::after { inset: 1.7rem; border-color: oklch(84% .06 40 / .2); }
-.door-left { left: 0; transform-origin: left; border-right: 1px solid oklch(84% .06 40 / .6); }
-.door-right { right: 0; transform-origin: right; border-left: 1px solid oklch(84% .06 40 / .6); }
+.door::after { inset: 1.7rem; border-color: color-mix(in oklab, var(--edge) 20%, transparent); }
+.door-left { left: 0; transform-origin: left; border-right: 1px solid color-mix(in oklab, var(--edge) 60%, transparent); }
+.door-right { right: 0; transform-origin: right; border-left: 1px solid color-mix(in oklab, var(--edge) 60%, transparent); }
 #cover.open .door-left { transform: rotateY(-100deg); }
 #cover.open .door-right { transform: rotateY(100deg); }
 #cover.open { pointer-events: none; }
 .cover-content {
-  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: absolute; inset: 0; z-index: 1; isolation: isolate; display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 1.25rem; text-align: center; transition: opacity .5s; color: var(--cream);
   padding: calc(1.5rem + env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-right, 0px)) calc(1.5rem + env(safe-area-inset-bottom, 0px)) max(28px, env(safe-area-inset-left, 0px));
 }
 #cover.open .cover-content { opacity: 0; }
+.cover-content::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 85% 42% at 50% 47%, color-mix(in oklab, var(--wine) 70%, transparent), transparent 75%); }
+.cover-names { font-weight: 500; }
+.cover-names .rg-light, .closing .rg-light { filter: drop-shadow(0 2px 6px oklch(12% .03 20 / .55)); }
+.cover-content .eyebrow, .cover-content .telugu, .cover-note { text-shadow: 0 1px 4px oklch(12% .03 20 / .6); }
 .cover-blessing { font-size: .95rem; opacity: .9; }
 .cover-names { font-size: clamp(2.1rem, 9.5vw, 3.6rem); text-transform: uppercase; letter-spacing: .1em; line-height: 1.12; }
 .cover-names .amp { display: block; font-size: 1.6rem; text-transform: none; font-style: italic; letter-spacing: 0; color: var(--cream); margin-block: .3rem; }
-.cover-note { font-size: .8rem; opacity: .75; }
+.cover-note { font-size: .8rem; opacity: .9; }
 .glow { animation: glow 3s ease-in-out infinite; }
-@keyframes glow { 50% { text-shadow: 0 0 16px oklch(84% .06 40 / .8); } }
+@keyframes glow { 50% { text-shadow: 0 0 16px color-mix(in oklab, var(--edge) 80%, transparent); } }
 
 /* ---------- Falling petals ---------- */
 #petals { position: fixed; inset: 0; z-index: 30; pointer-events: none; overflow: hidden; }
 .petal {
   position: absolute; top: -20px; width: 8px; height: 10px; border-radius: 80% 0 80% 0;
-  background: linear-gradient(135deg, oklch(88% .05 15), oklch(72% .09 15)); opacity: .55;
+  background: linear-gradient(135deg, var(--petal1), var(--petal2)); opacity: .6;
   animation: fall linear infinite; will-change: transform;
 }
 @keyframes fall { to { transform: translate3d(var(--drift), 110vh, 0) rotate(540deg); } }
@@ -123,7 +160,7 @@ header {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: calc(.6rem + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) .6rem max(16px, env(safe-area-inset-left, 0px));
   background: oklch(98.5% .008 60 / .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid oklch(70% .08 32 / .25);
+  border-bottom: 1px solid color-mix(in oklab, var(--rose) 25%, transparent);
 }
 .monogram { font-family: var(--font-display); font-size: 1.7rem; font-style: italic; text-decoration: none; line-height: 1; padding: .3rem 0; }
 header nav { display: none; gap: 1.5rem; }
@@ -132,7 +169,7 @@ header nav a:hover { color: var(--rose-deep); }
 @media (min-width: 820px) { header nav { display: flex; } }
 #music-btn {
   display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 1rem;
-  border: 1px solid oklch(70% .08 32 / .6); border-radius: 999px; background: var(--ivory); color: var(--rose-deep);
+  border: 1px solid color-mix(in oklab, var(--rose) 60%, transparent); border-radius: 999px; background: var(--ivory); color: var(--rose-deep);
   cursor: pointer; font-size: .62rem;
 }
 #music-btn svg { width: 18px; height: 18px; }
@@ -153,7 +190,7 @@ header nav a:hover { color: var(--rose-deep); }
 .name { font-size: clamp(2.6rem, 12vw, 4.4rem); line-height: 1.05; font-weight: 400; }
 .parentage { display: grid; gap: .3rem; justify-items: center; }
 .parentage .eyebrow { color: var(--rose-deep); font-size: .66rem; }
-.parents { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); line-height: 1.35; }
+.parents { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); line-height: 1.35; text-wrap: balance; }
 .parents i { color: var(--muted); }
 .weds { font-family: var(--font-display); font-style: italic; font-size: 2rem; color: var(--rose-deep); margin-block: .6rem; }
 .hero-date { color: var(--ink); margin-top: 1rem; line-height: 2; }
@@ -170,17 +207,17 @@ header nav a:hover { color: var(--rose-deep); }
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1rem;
   border: 4px solid var(--rose); box-shadow: var(--shadow); opacity: 0; transition: opacity .7s; background: var(--ivory);
 }
-.medallion .ring { position: absolute; inset: .5rem; color: oklch(70% .08 32 / .5); animation: spin 40s linear infinite; }
+.medallion .ring { position: absolute; inset: .5rem; color: color-mix(in oklab, var(--rose) 50%, transparent); animation: spin 40s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .medallion .day-num { font-family: var(--font-display); font-size: 5.5rem; line-height: 1; font-weight: 400; }
 .medallion .month { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .2em; color: var(--ink); }
 .medallion .eyebrow { color: var(--rose-deep); }
 .seal-face { box-shadow: var(--shadow); transition: transform 1s ease-out, opacity 1s ease-out; }
 .seal-face .inner {
-  position: absolute; inset: 1rem; border-radius: 50%; border: 2px solid oklch(84% .06 40 / .7);
+  position: absolute; inset: 1rem; border-radius: 50%; border: 2px solid color-mix(in oklab, var(--edge) 70%, transparent);
   display: flex; align-items: center; justify-content: center;
 }
-.seal-face .inner::before { content: ""; position: absolute; inset: .7rem; border-radius: 50%; border: 1px dashed oklch(84% .06 40 / .5); }
+.seal-face .inner::before { content: ""; position: absolute; inset: .7rem; border-radius: 50%; border: 1px dashed color-mix(in oklab, var(--edge) 50%, transparent); }
 .seal-face .initials { font-family: var(--font-display); font-style: italic; font-size: 4.2rem; line-height: 1; text-align: center; }
 .seal-face .initials small { display: block; font-size: .95rem; font-style: normal; letter-spacing: .4em; margin-top: .4rem; }
 .seal-left { clip-path: inset(0 50% 0 0); }
@@ -194,7 +231,7 @@ header nav a:hover { color: var(--rose-deep); }
 
 /* ---------- Details ---------- */
 .details-grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
-.timeline { list-style: none; margin: 0 0 0 .6rem; padding: 0 0 0 1.75rem; border-left: 1px solid oklch(70% .08 32 / .45); display: grid; gap: 1.75rem; }
+.timeline { list-style: none; margin: 0 0 0 .6rem; padding: 0 0 0 1.75rem; border-left: 1px solid color-mix(in oklab, var(--rose) 45%, transparent); display: grid; gap: 1.75rem; }
 .timeline li { position: relative; min-width: 0; }
 .timeline li::before {
   content: ""; position: absolute; left: calc(-1.75rem - 8px); top: .35rem; width: 15px; height: 15px;
@@ -204,7 +241,7 @@ header nav a:hover { color: var(--rose-deep); }
 .timeline .val { font-family: var(--font-display); font-size: 1.55rem; color: var(--ink); margin-top: .15rem; line-height: 1.3; }
 .timeline .map-btn { color: var(--ivory); margin-top: .9rem; min-height: 48px; padding: .7rem 1.5rem; font-size: .66rem; }
 .card {
-  border: 1px solid oklch(70% .08 32 / .45); box-shadow: var(--shadow); border-radius: 4px;
+  border: 1px solid color-mix(in oklab, var(--rose) 45%, transparent); box-shadow: var(--shadow); border-radius: 4px;
   padding: 2.25rem 1.4rem; text-align: center; display: grid; gap: 1.1rem; justify-items: center; background: var(--ivory);
 }
 .card .telugu { font-size: 1.45rem; color: var(--rose-deep); }
@@ -214,7 +251,7 @@ header nav a:hover { color: var(--rose-deep); }
 /* ---------- Countdown ---------- */
 .clock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; max-width: 34rem; margin-inline: auto; }
 .unit {
-  border: 1px solid oklch(70% .08 32 / .45); background: var(--ivory); border-radius: 4px;
+  border: 1px solid color-mix(in oklab, var(--rose) 45%, transparent); background: var(--ivory); border-radius: 4px;
   padding: 1rem .15rem; text-align: center; display: grid; gap: .3rem;
 }
 .unit .n { font-family: var(--font-display); font-size: clamp(2rem, 9vw, 3.4rem); line-height: 1; font-variant-numeric: tabular-nums; font-weight: 400; }
@@ -234,11 +271,11 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 /* ---------- Language, greeting, save & share ---------- */
 .lang-btn {
   min-height: 44px; padding: 0 1rem; border-radius: 999px; cursor: pointer;
-  border: 1px solid oklch(70% .08 32 / .6); background: var(--ivory); color: var(--rose-deep);
+  border: 1px solid color-mix(in oklab, var(--rose) 60%, transparent); background: var(--ivory); color: var(--rose-deep);
   font-family: var(--font-telugu); font-size: .85rem; letter-spacing: 0;
 }
 #cover .lang-btn {
-  position: absolute; z-index: 2; background: transparent; color: var(--cream); border-color: oklch(84% .06 40 / .6);
+  position: absolute; z-index: 2; background: transparent; color: var(--cream); border-color: color-mix(in oklab, var(--edge) 60%, transparent);
   top: calc(1rem + env(safe-area-inset-top, 0px)); right: calc(1rem + env(safe-area-inset-right, 0px));
 }
 .header-actions { display: flex; align-items: center; gap: .5rem; }
@@ -252,7 +289,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 .save-box { display: grid; gap: 1.25rem; justify-items: center; text-align: center; max-width: 30rem; margin-inline: auto; }
 .save-box .note { color: var(--muted); font-size: .95rem; }
 .closing .btn-row { margin-top: .5rem; }
-.closing .btn.outline { background: transparent; color: var(--cream); border-color: oklch(84% .06 40 / .6); }
+.closing .btn.outline { background: transparent; color: var(--cream); border-color: color-mix(in oklab, var(--edge) 60%, transparent); }
 :lang(te) .eyebrow { letter-spacing: .04em; text-transform: none; font-family: var(--font-telugu); font-size: .85rem; }
 :lang(te) .cover-names { letter-spacing: 0; text-transform: none; font-size: clamp(1.8rem, 8vw, 3rem); line-height: 1.5; }
 :lang(te) .name { font-size: clamp(1.9rem, 8.5vw, 3.2rem); line-height: 1.5; }
@@ -264,6 +301,15 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 :lang(te) .weds { font-size: 1.4rem; }
 :lang(te) .unit .eyebrow { font-size: .72rem; }
 
+.photo { display: grid; gap: 1rem; justify-items: center; margin-bottom: 1rem; }
+.photo-frame {
+  width: min(20rem, 100%); padding: .45rem; background: var(--rg-light);
+  border-radius: 10rem 10rem 1rem 1rem; box-shadow: 0 24px 60px -20px oklch(20% .05 15 / .7);
+}
+.photo-frame img { display: block; width: 100%; height: auto; aspect-ratio: 900 / 1586; object-fit: cover; border-radius: 9.6rem 9.6rem .7rem .7rem; }
+.photo .caption { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; color: var(--cream); }
+:lang(te) .photo .caption { font-family: var(--font-telugu); font-style: normal; font-size: 1.05rem; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   #petals { display: none; }
@@ -271,6 +317,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 </style>
 </head>
 <body>
+<script>(function(){var t=new URLSearchParams(location.search).get("theme");if(/^(maroon|green|blue)$/.test(t))document.documentElement.setAttribute("data-palette",t);})();</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="orn" viewBox="0 0 240 24"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M0 12 H92"/><path d="M148 12 H240"/><path d="M120 2 L130 12 L120 22 L110 12Z" fill="currentColor" fill-opacity=".25"/><circle cx="100" cy="12" r="2.5" fill="currentColor"/><circle cx="140" cy="12" r="2.5" fill="currentColor"/><path d="M92 12 Q96 6 100 12 Q96 18 92 12"/><path d="M148 12 Q144 6 140 12 Q144 18 148 12"/></g></symbol>
@@ -428,6 +475,10 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 
   <section id="closing" class="silk band">
     <div class="wrap closing">
+      <figure class="photo" style="margin:0 0 1rem">
+        <div class="photo-frame"><img src="couple.jpg" width="900" height="1586" loading="lazy" alt="Vikas and Sai Madhuri in traditional wedding attire with lotus and jasmine garlands"></div>
+        <figcaption class="caption" data-i18n="photoCaption">Together, a beautiful beginning</figcaption>
+      </figure>
       <p class="eyebrow" data-i18n="presence">Your presence is our blessing</p>
       <svg class="ornament"><use href="#orn"/></svg>
       <h2 class="names rg-light" data-i18n="closingNames">Vikas &amp; Sai Madhuri</h2>
@@ -499,7 +550,8 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     families: "సంగెం & అన్నా కుటుంబాలు",
     shareWa: "వాట్సాప్‌లో పంపండి", shareMore: "ఇతర మార్గాలు",
     backTop: "పైకి వెళ్ళండి",
-    footer: "ప్రేమతో ఆహ్వానిస్తున్నాము"
+    footer: "ప్రేమతో ఆహ్వానిస్తున్నాము",
+    photoCaption: "ఒక అందమైన ప్రయాణానికి శ్రీకారం"
   };
   var UI = {
     en: {
@@ -564,22 +616,28 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     });
   });
 
-  /* ---------- Generated music: veena melody in raga Mohanam over a tanpura drone ---------- */
+  /* ---------- Generated music: mangala vadyam — nadaswaram melody in raga Hamsadhwani with thavil and ottu drone ---------- */
   var Music = (function () {
-    var ctx, master, wet, timer, nextTime = 0, step = 0, beat = 60 / 66;
-    var SA = 293.66; // D4
-    var A = [[4,1],[7,1],[9,1],[12,2],[9,.5],[7,.5],[4,1],[2,1],[4,2],[null,2]];
-    var B = [[7,1],[9,1],[12,1],[14,1],[16,2],[14,1],[12,1],[9,2],[7,2],[null,2]];
-    var C = [[12,1],[9,.5],[7,.5],[4,1],[7,1],[9,2],[7,1],[4,1],[2,2],[0,1],[2,1],[4,2],[null,2]];
-    var D = [[0,1],[-3,1],[0,1],[2,1],[4,2],[2,1],[0,1],[-3,2],[0,3],[null,3]];
-    var song = [].concat(A, B, A, C, B, D);
-    var droneBeat = 0;
+    var ctx, master, wet, timer, nadVoice, nadGain, nadLfoDepth;
+    var nextNote = 0, noteStep = 0, nextDrum = 0, drumStep = 0;
+    var beat = 60 / 84, SA = 293.66; // D4
+    // Hamsadhwani: S R2 G3 P N3 (0 2 4 7 11), eight-beat Adi talam cycles
+    var c1 = [[12,1.5],[11,.5],[12,1],[14,1],[16,2],[14,1],[12,1]];
+    var c2 = [[11,1],[12,.5],[11,.5],[7,1],[4,1],[2,1],[4,1],[7,2]];
+    var c3 = [[4,1],[7,1],[11,1],[12,1],[11,.5],[12,.5],[14,1],[12,2]];
+    var c4 = [[11,1],[7,1],[4,1],[2,1],[0,3],[null,1]];
+    var c5 = [[12,1],[14,1],[16,1],[19,1],[16,2],[14,1],[12,1]];
+    var c6 = [[14,.5],[16,.5],[14,1],[12,1],[11,1],[12,2],[11,1],[7,1]];
+    var song = [].concat(c1, c2, c3, c4, c5, c6, c3, c4);
+    // thavil: 16 half-beat slots per cycle. D = low (left hand), T = open right, t = stick
+    var thavil = "D.ttT.tDD.ttTtTt";
     function hz(semi) { return SA * Math.pow(2, semi / 12); }
+
     function impulse(seconds) {
       var len = ctx.sampleRate * seconds, buf = ctx.createBuffer(2, len, ctx.sampleRate);
       for (var c = 0; c < 2; c++) {
         var d = buf.getChannelData(c);
-        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
       }
       return buf;
     }
@@ -587,48 +645,81 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
       node.connect(master);
       var s = ctx.createGain(); s.gain.value = sendAmt; node.connect(s); s.connect(wet);
     }
-    function pluck(freq, t, dur, vol, glide) {
-      var out = ctx.createGain(), lp = ctx.createBiquadFilter();
-      lp.type = "lowpass";
-      lp.frequency.setValueAtTime(freq * 7, t);
-      lp.frequency.exponentialRampToValueAtTime(freq * 1.8, t + dur);
-      [["triangle", 1, 1], ["sine", 2, .35], ["sine", 3, .12]].forEach(function (h) {
-        var o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = h[0];
-        var f = freq * h[1];
-        if (glide) {
-          o.frequency.setValueAtTime(f / Math.pow(2, 1 / 12), t);
-          o.frequency.linearRampToValueAtTime(f, t + .14);
-        } else o.frequency.setValueAtTime(f, t);
-        g.gain.value = h[2];
-        o.connect(g); g.connect(lp);
-        o.start(t); o.stop(t + dur + 1.6);
-      });
-      out.gain.setValueAtTime(0, t);
-      out.gain.linearRampToValueAtTime(vol, t + .012);
-      out.gain.exponentialRampToValueAtTime(.0008, t + dur + 1.5);
-      lp.connect(out); route(out, .55);
+    function reedChain(dest) {
+      var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 250;
+      var f1 = ctx.createBiquadFilter(); f1.type = "peaking"; f1.frequency.value = 1150; f1.Q.value = 1.4; f1.gain.value = 9;
+      var f2 = ctx.createBiquadFilter(); f2.type = "peaking"; f2.frequency.value = 2600; f2.Q.value = 2; f2.gain.value = 6;
+      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 4200;
+      hp.connect(f1); f1.connect(f2); f2.connect(lp); lp.connect(dest);
+      return hp;
     }
-    function drone(freq, t) {
-      var o = ctx.createOscillator(), lp = ctx.createBiquadFilter(), g = ctx.createGain();
-      o.type = "sawtooth"; o.frequency.value = freq;
-      lp.type = "lowpass"; lp.frequency.value = 1100; lp.Q.value = 2;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(.035, t + .03);
-      g.gain.exponentialRampToValueAtTime(.0008, t + 3.2);
-      o.connect(lp); lp.connect(g); route(g, .7);
-      o.start(t); o.stop(t + 3.3);
+    function buildNadaswaram() {
+      nadGain = ctx.createGain(); nadGain.gain.value = 0;
+      var input = reedChain(nadGain);
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 5.6;
+      nadLfoDepth = ctx.createGain(); nadLfoDepth.gain.value = 0;
+      lfo.connect(nadLfoDepth);
+      nadVoice = [["sawtooth", 1, .55], ["square", 1.003, .3]].map(function (v) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = v[0]; o.frequency.value = SA * v[1]; g.gain.value = v[2];
+        nadLfoDepth.connect(o.detune);
+        o.connect(g); g.connect(input); o.start();
+        return { osc: o, ratio: v[1] };
+      });
+      lfo.start();
+      route(nadGain, .35);
+    }
+    function buildOttu() {
+      var g = ctx.createGain(); g.gain.value = .022;
+      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900;
+      [hz(-12), hz(-5)].forEach(function (f, i) {
+        var o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = f; o.detune.value = i ? 3 : -3;
+        o.connect(lp); o.start();
+      });
+      lp.connect(g); route(g, .4);
+    }
+    function playNote(n, t) {
+      var len = n[1] * beat, vol = .11;
+      if (n[0] === null) { nadGain.gain.setTargetAtTime(0, t, .05); return; }
+      var f = hz(n[0]);
+      nadVoice.forEach(function (v) { v.osc.frequency.setTargetAtTime(f * v.ratio, t, .035); });
+      nadGain.gain.setTargetAtTime(vol * .55, t, .012);
+      nadGain.gain.setTargetAtTime(vol, t + .05, .05);
+      nadLfoDepth.gain.cancelScheduledValues(t);
+      nadLfoDepth.gain.setValueAtTime(0, t);
+      if (n[1] >= 1.5) nadLfoDepth.gain.linearRampToValueAtTime(22, t + len * .9);
+    }
+    function drum(kind, t) {
+      var g = ctx.createGain();
+      if (kind === "t") {
+        var len = Math.floor(ctx.sampleRate * .08), buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
+        var src = ctx.createBufferSource(), bp = ctx.createBiquadFilter();
+        src.buffer = buf; bp.type = "bandpass"; bp.frequency.value = 3200; bp.Q.value = 1.2;
+        g.gain.value = .22; src.connect(bp); bp.connect(g); src.start(t);
+      } else {
+        var o = ctx.createOscillator(), lo = kind === "D";
+        o.type = "sine";
+        o.frequency.setValueAtTime(lo ? 120 : 260, t);
+        o.frequency.exponentialRampToValueAtTime(lo ? 58 : 200, t + (lo ? .3 : .12));
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(lo ? .5 : .28, t + .005);
+        g.gain.exponentialRampToValueAtTime(.001, t + (lo ? .45 : .2));
+        o.connect(g); o.start(t); o.stop(t + .5);
+      }
+      route(g, .15);
     }
     function schedule() {
-      while (nextTime < ctx.currentTime + .3) {
-        var n = song[step % song.length], len = n[1] * beat;
-        if (n[0] !== null) pluck(hz(n[0]), nextTime, len, .16, n[1] >= 2);
-        var cyc = [hz(-5), hz(0), hz(0), hz(-12)];
-        var beatsIn = Math.floor(n[1]) || 0;
-        for (var b = 0; b < Math.max(1, beatsIn); b++) {
-          if (n[1] >= 1 || step % 2 === 0) drone(cyc[droneBeat++ % 4] / 2, nextTime + b * beat);
-        }
-        nextTime += len; step++;
+      var horizon = ctx.currentTime + .3;
+      while (nextNote < horizon) {
+        var n = song[noteStep++ % song.length];
+        playNote(n, nextNote);
+        nextNote += n[1] * beat;
+      }
+      while (nextDrum < horizon) {
+        var k = thavil[drumStep++ % thavil.length];
+        if (k !== ".") drum(k, nextDrum);
+        nextDrum += beat / 2;
       }
     }
     function start() {
@@ -640,14 +731,17 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
         master = ctx.createGain(); master.gain.value = 0;
         var comp = ctx.createDynamicsCompressor();
         master.connect(comp); comp.connect(ctx.destination);
-        var rev = ctx.createConvolver(); rev.buffer = impulse(3.2);
-        wet = ctx.createGain(); wet.gain.value = .5; wet.connect(rev); rev.connect(master);
-        nextTime = ctx.currentTime + .15;
+        var rev = ctx.createConvolver(); rev.buffer = impulse(2.4);
+        wet = ctx.createGain(); wet.gain.value = .45; wet.connect(rev); rev.connect(master);
+        buildNadaswaram(); buildOttu();
       }
       if (ctx.state === "suspended") ctx.resume();
       master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setTargetAtTime(.9, ctx.currentTime, .8);
-      if (!timer) { nextTime = Math.max(nextTime, ctx.currentTime + .1); timer = setInterval(schedule, 100); schedule(); }
+      master.gain.setTargetAtTime(.8, ctx.currentTime, .6);
+      if (!timer) {
+        nextNote = nextDrum = Math.max(nextNote, ctx.currentTime + .15);
+        timer = setInterval(schedule, 100); schedule();
+      }
       return true;
     }
     function stop() {
