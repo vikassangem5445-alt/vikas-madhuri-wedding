@@ -30,8 +30,8 @@
   --ink: oklch(30% .04 20);
   --muted: oklch(47% .045 22);
   --cream: oklch(95% .03 60);
-  --font-display: "Cormorant Garamond", "Times New Roman", serif;
-  --font-sans: "Jost", system-ui, -apple-system, sans-serif;
+  --font-display: "Cormorant Garamond", "Noto Serif Telugu", "Times New Roman", serif;
+  --font-sans: "Jost", "Noto Serif Telugu", system-ui, -apple-system, sans-serif;
   --font-telugu: "Noto Serif Telugu", "Kohinoor Telugu", "Gautami", serif;
   --rg-dark: linear-gradient(135deg, oklch(64% .09 38), oklch(50% .1 22) 55%, oklch(40% .085 15));
   --rg-light: linear-gradient(135deg, oklch(95% .03 60), oklch(84% .06 40) 55%, oklch(72% .08 28));
@@ -202,7 +202,7 @@ header nav a:hover { color: var(--rose-deep); }
 }
 .timeline .eyebrow { color: var(--rose-deep); font-size: .66rem; }
 .timeline .val { font-family: var(--font-display); font-size: 1.55rem; color: var(--ink); margin-top: .15rem; line-height: 1.3; }
-.timeline .map-btn { margin-top: .9rem; min-height: 48px; padding: .7rem 1.5rem; font-size: .66rem; }
+.timeline .map-btn { color: var(--ivory); margin-top: .9rem; min-height: 48px; padding: .7rem 1.5rem; font-size: .66rem; }
 .card {
   border: 1px solid oklch(70% .08 32 / .45); box-shadow: var(--shadow); border-radius: 4px;
   padding: 2.25rem 1.4rem; text-align: center; display: grid; gap: 1.1rem; justify-items: center; background: var(--ivory);
@@ -231,6 +231,39 @@ header nav a:hover { color: var(--rose-deep); }
 footer { padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px)); text-align: center; }
 footer .eyebrow { font-size: .6rem; opacity: .7; }
 
+/* ---------- Language, greeting, save & share ---------- */
+.lang-btn {
+  min-height: 44px; padding: 0 1rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid oklch(70% .08 32 / .6); background: var(--ivory); color: var(--rose-deep);
+  font-family: var(--font-telugu); font-size: .85rem; letter-spacing: 0;
+}
+#cover .lang-btn {
+  position: absolute; z-index: 2; background: transparent; color: var(--cream); border-color: oklch(84% .06 40 / .6);
+  top: calc(1rem + env(safe-area-inset-top, 0px)); right: calc(1rem + env(safe-area-inset-right, 0px));
+}
+.header-actions { display: flex; align-items: center; gap: .5rem; }
+@media (max-width: 380px) { #music-label { display: none; } #music-btn { padding: 0 .9rem; } }
+.greet { font-family: var(--font-display); font-style: italic; font-size: 1.55rem; line-height: 1.3; }
+.cover-content .greet { color: var(--cream); }
+.hero .greet { color: var(--rose-deep); }
+.btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.btn.outline { background: var(--ivory); color: var(--rose-deep); border: 1px solid var(--rose); box-shadow: none; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.save-box { display: grid; gap: 1.25rem; justify-items: center; text-align: center; max-width: 30rem; margin-inline: auto; }
+.save-box .note { color: var(--muted); font-size: .95rem; }
+.closing .btn-row { margin-top: .5rem; }
+.closing .btn.outline { background: transparent; color: var(--cream); border-color: oklch(84% .06 40 / .6); }
+:lang(te) .eyebrow { letter-spacing: .04em; text-transform: none; font-family: var(--font-telugu); font-size: .85rem; }
+:lang(te) .cover-names { letter-spacing: 0; text-transform: none; font-size: clamp(1.8rem, 8vw, 3rem); line-height: 1.5; }
+:lang(te) .name { font-size: clamp(1.9rem, 8.5vw, 3.2rem); line-height: 1.5; }
+:lang(te) .parents, :lang(te) .card p.body, :lang(te) .closing .thanks { font-family: var(--font-telugu); font-size: 1.05rem; line-height: 1.8; }
+:lang(te) .section-head h2 { font-family: var(--font-telugu); font-size: clamp(1.9rem, 8vw, 2.8rem); line-height: 1.5; }
+:lang(te) .timeline .val, :lang(te) .closing .names, :lang(te) .closing .families, :lang(te) .weds { font-family: var(--font-telugu); }
+:lang(te) .timeline .val { font-size: 1.25rem; line-height: 1.6; }
+:lang(te) .closing .names { font-size: clamp(1.9rem, 8vw, 2.8rem); line-height: 1.5; }
+:lang(te) .weds { font-size: 1.4rem; }
+:lang(te) .unit .eyebrow { font-size: .72rem; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   #petals { display: none; }
@@ -242,19 +275,24 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="orn" viewBox="0 0 240 24"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M0 12 H92"/><path d="M148 12 H240"/><path d="M120 2 L130 12 L120 22 L110 12Z" fill="currentColor" fill-opacity=".25"/><circle cx="100" cy="12" r="2.5" fill="currentColor"/><circle cx="140" cy="12" r="2.5" fill="currentColor"/><path d="M92 12 Q96 6 100 12 Q96 18 92 12"/><path d="M148 12 Q144 6 140 12 Q144 18 148 12"/></g></symbol>
   <symbol id="lotus" viewBox="0 0 120 64"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 6 C70 20 70 40 60 58 C50 40 50 20 60 6Z" fill="currentColor" fill-opacity=".15"/><path d="M60 58 C48 46 36 30 34 16 C46 22 56 36 60 58Z"/><path d="M60 58 C72 46 84 30 86 16 C74 22 64 36 60 58Z"/><path d="M60 58 C42 54 22 44 12 30 C28 30 46 40 60 58Z"/><path d="M60 58 C78 54 98 44 108 30 C92 30 74 40 60 58Z"/><path d="M20 60 H100"/></g></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></g></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></g></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
 </svg>
 
 <div id="cover" role="dialog" aria-modal="true" aria-label="Wedding invitation cover">
   <div class="door door-left silk"></div>
   <div class="door door-right silk"></div>
+  <button type="button" class="lang-btn" data-lang-toggle>తెలుగు</button>
   <div class="cover-content">
     <p class="telugu cover-blessing glow">శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు</p>
-    <p class="eyebrow glow">The wedding of</p>
+    <p class="greet" id="greet-cover" hidden></p>
+    <p class="eyebrow glow" data-i18n="wedOf">The wedding of</p>
     <svg class="ornament"><use href="#orn"/></svg>
-    <h1 class="cover-names"><span class="rg-light">Vikas Sangem</span><span class="amp">&amp;</span><span class="rg-light">Dr. Sai Madhuri Anna</span></h1>
+    <h1 class="cover-names"><span class="rg-light" data-i18n="groomFull">Vikas Sangem</span><span class="amp">&amp;</span><span class="rg-light" data-i18n="brideFull">Dr. Sai Madhuri Anna</span></h1>
     <svg class="ornament flip"><use href="#orn"/></svg>
-    <button type="button" id="open-btn" class="btn eyebrow">Open Invitation</button>
-    <p class="cover-note">Soft music will play · tap the music button to turn it off</p>
+    <button type="button" id="open-btn" class="btn eyebrow" data-i18n="open">Open Invitation</button>
+    <p class="cover-note" data-i18n="coverNote">Soft music will play · tap the music button to turn it off</p>
   </div>
 </div>
 
@@ -263,15 +301,18 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 <header>
   <a href="#invitation" class="monogram rg" aria-label="Vikas and Madhuri">V &amp; M</a>
   <nav aria-label="Sections">
-    <a class="eyebrow" href="#invitation">Invitation</a>
-    <a class="eyebrow" href="#date">The Date</a>
-    <a class="eyebrow" href="#details">Details</a>
-    <a class="eyebrow" href="#countdown">Countdown</a>
-    <a class="eyebrow" href="#closing">With Love</a>
+    <a class="eyebrow" href="#invitation" data-i18n="navInv">Invitation</a>
+    <a class="eyebrow" href="#date" data-i18n="navDate">The Date</a>
+    <a class="eyebrow" href="#details" data-i18n="navDetails">Details</a>
+    <a class="eyebrow" href="#save" data-i18n="navSave">Save &amp; Share</a>
+    <a class="eyebrow" href="#closing" data-i18n="navLove">With Love</a>
   </nav>
-  <button type="button" id="music-btn" class="eyebrow" aria-pressed="false" aria-label="Turn music on">
-    <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Music off</span>
-  </button>
+  <div class="header-actions">
+    <button type="button" class="lang-btn" data-lang-toggle>తెలుగు</button>
+    <button type="button" id="music-btn" class="eyebrow" aria-pressed="false" aria-label="Turn music on">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Music off</span>
+    </button>
+  </div>
 </header>
 
 <main>
@@ -279,41 +320,42 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     <div class="wrap hero">
       <svg class="lotus" viewBox="0 0 120 64" aria-hidden="true"><use href="#lotus"/></svg>
       <p class="telugu">శుభ వివాహ ఆహ్వానం</p>
-      <p class="eyebrow blessing">With the blessings of our families</p>
+      <p class="greet" id="greet-hero" hidden></p>
+      <p class="eyebrow blessing" data-i18n="blessing">With the blessings of our families</p>
       <svg class="ornament"><use href="#orn"/></svg>
       <div class="couple">
-        <h1 class="name rg">Vikas Sangem</h1>
+        <h1 class="name rg" data-i18n="groomHero">Vikas Sangem</h1>
         <div class="parentage">
-          <span class="eyebrow">Son of</span>
-          <span class="parents">Sri Sangem Dhanunjaya <i>and</i> Smt. Shantha</span>
+          <span class="eyebrow" data-i18n="sonOf">Son of</span>
+          <span class="parents" data-i18n-html="groomParents">Sri Sangem Dhanunjaya <i>and</i> Smt. Shantha</span>
         </div>
-        <p class="weds">weds</p>
-        <h1 class="name rg">Dr. Sai Madhuri Anna</h1>
+        <p class="weds" data-i18n="weds">weds</p>
+        <h1 class="name rg" data-i18n="brideHero">Dr. Sai Madhuri Anna</h1>
         <div class="parentage">
-          <span class="eyebrow">Daughter of</span>
-          <span class="parents">Sri Nageswar Rao Anna <i>and</i> Smt. Lakshmi</span>
+          <span class="eyebrow" data-i18n="daughterOf">Daughter of</span>
+          <span class="parents" data-i18n-html="brideParents">Sri Nageswar Rao Anna <i>and</i> Smt. Lakshmi</span>
         </div>
       </div>
       <svg class="ornament flip"><use href="#orn"/></svg>
-      <p class="eyebrow hero-date">Sunday · 22 November 2026<br>9:49 AM · Nalgonda</p>
+      <p class="eyebrow hero-date" data-i18n-html="heroDate">Sunday · 22 November 2026<br>9:49 AM · Nalgonda</p>
     </div>
   </section>
 
   <section id="date" class="paper band">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">A seal for you</p>
-        <h2 class="rg">Save the Date</h2>
+        <p class="eyebrow" data-i18n="sealEyebrow">A seal for you</p>
+        <h2 class="rg" data-i18n="saveTheDate">Save the Date</h2>
         <svg class="ornament"><use href="#orn"/></svg>
       </div>
-      <p class="lede">Tap the rose-gold seal to reveal the day our families become one.</p>
+      <p class="lede" data-i18n="sealLede">Tap the rose-gold seal to reveal the day our families become one.</p>
       <div class="seal-col">
         <button type="button" id="seal" class="seal" aria-label="Break the seal to reveal the wedding date" aria-expanded="false">
           <span class="medallion">
             <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-dasharray="2 6"/></svg>
-            <span class="eyebrow">Sunday</span>
+            <span class="eyebrow" data-i18n="sunday">Sunday</span>
             <span class="day-num rg">22</span>
-            <span class="month">November</span>
+            <span class="month" data-i18n="november">November</span>
             <span class="eyebrow">2026</span>
           </span>
           <span class="seal-face seal-left silk" aria-hidden="true"><span class="inner"><span class="initials rg-light">V&amp;M<small>2026</small></span></span></span>
@@ -327,23 +369,23 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
   <section id="details" class="blush band">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">The wedding celebration</p>
-        <h2 class="rg">Wedding Details</h2>
+        <p class="eyebrow" data-i18n="celebration">The wedding celebration</p>
+        <h2 class="rg" data-i18n="detailsTitle">Wedding Details</h2>
         <svg class="ornament"><use href="#orn"/></svg>
       </div>
       <div class="details-grid">
         <ol class="timeline">
-          <li><p class="eyebrow">Date</p><p class="val">Sunday, 22 November 2026</p></li>
-          <li><p class="eyebrow">Muhurtham</p><p class="val">9:49 AM</p></li>
-          <li><p class="eyebrow">Wedding venue</p><p class="val">Bandaru Gardens, Hyderabad Road, Nalgonda</p>
-            <a class="btn dark eyebrow map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bandaru%20Gardens%2C%20Hyderabad%20Road%2C%20Nalgonda" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Get Directions</a></li>
+          <li><p class="eyebrow" data-i18n="dateLabel">Date</p><p class="val" data-i18n="dateVal">Sunday, 22 November 2026</p></li>
+          <li><p class="eyebrow" data-i18n="muhurthamLabel">Muhurtham</p><p class="val" data-i18n="muhurthamVal">9:49 AM</p></li>
+          <li><p class="eyebrow" data-i18n="venueLabel">Wedding venue</p><p class="val" data-i18n="venueVal">Bandaru Gardens, Hyderabad Road, Nalgonda</p>
+            <a class="btn dark eyebrow map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bandaru%20Gardens%2C%20Hyderabad%20Road%2C%20Nalgonda" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="directions">Get Directions</span></a></li>
         </ol>
         <div class="card">
           <p class="telugu">ఆహ్వానం</p>
           <svg class="ornament"><use href="#orn"/></svg>
-          <p class="body">With joy in our hearts and the blessings of our elders, we warmly invite you and your family to grace the wedding of <span class="rg">Vikas</span> and <span class="rg">Madhuri</span>.</p>
-          <p class="body">Your presence and blessings will make the celebration complete.</p>
-          <p class="eyebrow sign">With warm regards<br>Sangem &amp; Anna families</p>
+          <p class="body" data-i18n-html="invite1">With joy in our hearts and the blessings of our elders, we warmly invite you and your family to grace the wedding of <span class="rg">Vikas</span> and <span class="rg">Madhuri</span>.</p>
+          <p class="body" data-i18n="invite2">Your presence and blessings will make the celebration complete.</p>
+          <p class="eyebrow sign" data-i18n-html="sign">With warm regards<br>Sangem &amp; Anna families</p>
         </div>
       </div>
     </div>
@@ -352,34 +394,55 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
   <section id="countdown" class="paper band">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">The auspicious day draws near</p>
-        <h2 class="rg">Counting Down</h2>
+        <p class="eyebrow" data-i18n="countEyebrow">The auspicious day draws near</p>
+        <h2 class="rg" data-i18n="countTitle">Counting Down</h2>
         <svg class="ornament"><use href="#orn"/></svg>
       </div>
       <div class="clock" id="clock">
-        <div class="unit"><span class="n rg" id="cd-d">--</span><span class="eyebrow">Days</span></div>
-        <div class="unit"><span class="n rg" id="cd-h">--</span><span class="eyebrow">Hours</span></div>
-        <div class="unit"><span class="n rg" id="cd-m">--</span><span class="eyebrow">Mins</span></div>
-        <div class="unit"><span class="n rg" id="cd-s">--</span><span class="eyebrow">Secs</span></div>
+        <div class="unit"><span class="n rg" id="cd-d">--</span><span class="eyebrow" data-i18n="days">Days</span></div>
+        <div class="unit"><span class="n rg" id="cd-h">--</span><span class="eyebrow" data-i18n="hours">Hours</span></div>
+        <div class="unit"><span class="n rg" id="cd-m">--</span><span class="eyebrow" data-i18n="mins">Mins</span></div>
+        <div class="unit"><span class="n rg" id="cd-s">--</span><span class="eyebrow" data-i18n="secs">Secs</span></div>
       </div>
-      <p id="count-done" hidden>The auspicious day has arrived. Thank you for your blessings!</p>
-      <p class="eyebrow count-note">Until the muhurtham · 22 November 2026 · 9:49 AM IST</p>
+      <p id="count-done" hidden data-i18n="countDone">The auspicious day has arrived. Thank you for your blessings!</p>
+      <p class="eyebrow count-note" data-i18n="countNote">Until the muhurtham · 22 November 2026 · 9:49 AM IST</p>
+    </div>
+  </section>
+
+  <section id="save" class="blush band">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="saveEyebrow">Don't miss the muhurtham</p>
+        <h2 class="rg" data-i18n="saveTitle">Add to Calendar</h2>
+        <svg class="ornament"><use href="#orn"/></svg>
+      </div>
+      <div class="save-box">
+        <p class="note" data-i18n="saveNote">Save the wedding on your phone. Your calendar will remind you a day before and 2 hours before the muhurtham.</p>
+        <div class="btn-row" id="cal-row">
+          <a class="btn dark eyebrow" id="cal-apple" href="event.ics"><svg aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="calApple">iPhone Calendar</span></a>
+          <a class="btn outline eyebrow" id="cal-google" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="calGoogle">Google Calendar</span></a>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="closing" class="silk band">
     <div class="wrap closing">
-      <p class="eyebrow">Your presence is our blessing</p>
+      <p class="eyebrow" data-i18n="presence">Your presence is our blessing</p>
       <svg class="ornament"><use href="#orn"/></svg>
-      <h2 class="names rg-light">Vikas &amp; Sai Madhuri</h2>
-      <p class="eyebrow">22 November 2026 · Sunday · Bandaru Gardens, Nalgonda</p>
-      <p class="thanks">Thank you for your love and blessings. We can't wait to celebrate with you.</p>
-      <p class="families rg-light">Sangem &amp; Anna families</p>
-      <a href="#invitation" class="btn eyebrow">Back to the top</a>
+      <h2 class="names rg-light" data-i18n="closingNames">Vikas &amp; Sai Madhuri</h2>
+      <p class="eyebrow" data-i18n="closingDate">22 November 2026 · Sunday · Bandaru Gardens, Nalgonda</p>
+      <p class="thanks" data-i18n="thanks">Thank you for your love and blessings. We can't wait to celebrate with you.</p>
+      <p class="families rg-light" data-i18n="families">Sangem &amp; Anna families</p>
+      <div class="btn-row">
+        <a class="btn eyebrow" id="share-wa" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="shareWa">Share on WhatsApp</span></a>
+        <button type="button" class="btn outline eyebrow" id="share-more" hidden><svg aria-hidden="true"><use href="#i-share"/></svg><span data-i18n="shareMore">More options</span></button>
+      </div>
+      <a href="#invitation" class="eyebrow" style="color:var(--cream);padding:.75rem" data-i18n="backTop">Back to the top</a>
     </div>
   </section>
 </main>
-<footer class="silk"><p class="eyebrow">Invited with love</p></footer>
+<footer class="silk"><p class="eyebrow" data-i18n="footer">Invited with love</p></footer>
 
 <script>
 (function () {
@@ -387,6 +450,119 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
   var $ = function (id) { return document.getElementById(id); };
   // Muhurtham: Sunday 22 Nov 2026, 9:49 AM IST (UTC+5:30) = 04:19 UTC
   var TARGET = Date.UTC(2026, 10, 22, 4, 19, 0);
+  var BASE = location.origin + location.pathname;
+  var VENUE = "Bandaru Gardens, Hyderabad Road, Nalgonda";
+
+  /* ---------- Words ---------- */
+  var TE = {
+    wedOf: "శుభ వివాహ మహోత్సవం",
+    groomFull: "చి. సంగెం వికాస్",
+    brideFull: "చి.ల.సౌ. డా. అన్నా సాయి మాధురి",
+    open: "ఆహ్వానం తెరవండి",
+    coverNote: "మృదువైన సంగీతం వినిపిస్తుంది · ఆపాలంటే సంగీతం బటన్ నొక్కండి",
+    navInv: "ఆహ్వానం", navDate: "తేదీ", navDetails: "వివరాలు", navSave: "క్యాలెండర్", navLove: "ప్రేమతో",
+    blessing: "పెద్దల ఆశీస్సులతో",
+    groomHero: "చి. సంగెం వికాస్",
+    sonOf: "",
+    groomParents: "శ్రీ సంగెం ధనుంజయ – శ్రీమతి శాంత దంపతుల కుమారుడు",
+    weds: "మరియు",
+    brideHero: "చి.ల.సౌ. డా. అన్నా సాయి మాధురి",
+    daughterOf: "",
+    brideParents: "శ్రీ అన్నా నాగేశ్వర రావు – శ్రీమతి లక్ష్మి దంపతుల కుమార్తె",
+    heroDate: "ఆదివారం · 22 నవంబర్ 2026<br>ఉదయం 9:49 · నల్గొండ",
+    sealEyebrow: "మీ కోసం ఒక ముద్ర",
+    saveTheDate: "శుభ ముహూర్త తేదీ",
+    sealLede: "మా రెండు కుటుంబాలు ఒక్కటయ్యే రోజును చూడటానికి ఈ ముద్రను తాకండి.",
+    sunday: "ఆదివారం", november: "నవంబర్",
+    celebration: "వివాహ వేడుక",
+    detailsTitle: "వివాహ వివరాలు",
+    dateLabel: "తేదీ", dateVal: "ఆదివారం, 22 నవంబర్ 2026",
+    muhurthamLabel: "ముహూర్తం", muhurthamVal: "ఉదయం 9:49 గంటలకు",
+    venueLabel: "వివాహ వేదిక", venueVal: "బండారు గార్డెన్స్, హైదరాబాద్ రోడ్, నల్గొండ",
+    directions: "దారి చూపించు",
+    invite1: "పెద్దల ఆశీస్సులతో, హృదయపూర్వక ఆనందంతో <span class=\"rg\">వికాస్</span> మరియు <span class=\"rg\">మాధురి</span> ల వివాహ మహోత్సవానికి మిమ్మల్ని సకుటుంబ సపరివార సమేతంగా ఆహ్వానిస్తున్నాము.",
+    invite2: "మీ రాక మా వేడుకకు నిండుదనం. మీ ఆశీస్సులే మాకు కానుక.",
+    sign: "ఇట్లు<br>సంగెం &amp; అన్నా కుటుంబాలు",
+    countEyebrow: "శుభ ముహూర్తం సమీపిస్తోంది",
+    countTitle: "ముహూర్తానికి ఇంకా",
+    days: "రోజులు", hours: "గంటలు", mins: "నిమిషాలు", secs: "సెకన్లు",
+    countDone: "శుభ ముహూర్తం వచ్చేసింది. మీ ఆశీస్సులకు ధన్యవాదాలు!",
+    countNote: "22 నవంబర్ 2026 · ఉదయం 9:49 ముహూర్తం వరకు",
+    saveEyebrow: "ముహూర్తం మర్చిపోకండి",
+    saveTitle: "క్యాలెండర్‌లో చేర్చండి",
+    saveNote: "పెళ్లి తేదీని మీ ఫోన్‌లో సేవ్ చేసుకోండి. ఒక రోజు ముందు, ముహూర్తానికి 2 గంటల ముందు మీ క్యాలెండర్ గుర్తు చేస్తుంది.",
+    calApple: "ఐఫోన్ క్యాలెండర్", calGoogle: "గూగుల్ క్యాలెండర్",
+    presence: "మీ రాకే మాకు ఆశీర్వాదం",
+    closingNames: "వికాస్ & సాయి మాధురి",
+    closingDate: "22 నవంబర్ 2026 · ఆదివారం · బండారు గార్డెన్స్, నల్గొండ",
+    thanks: "మీ ప్రేమకు, ఆశీస్సులకు ధన్యవాదాలు. మీతో కలిసి ఈ వేడుక జరుపుకోవాలని ఎదురుచూస్తున్నాం.",
+    families: "సంగెం & అన్నా కుటుంబాలు",
+    shareWa: "వాట్సాప్‌లో పంపండి", shareMore: "ఇతర మార్గాలు",
+    backTop: "పైకి వెళ్ళండి",
+    footer: "ప్రేమతో ఆహ్వానిస్తున్నాము"
+  };
+  var UI = {
+    en: {
+      musicOn: "Music on", musicOff: "Music off", toggle: "తెలుగు",
+      tap: "Tap to reveal", revealed: "Sunday · 22 November 2026 · 9:49 AM",
+      greetCover: function (n) { return "Dear " + n + ","; },
+      greetHero: function (n) { return "Specially for " + n + " & family"; },
+      share: "With immense joy, we invite you and your family to the wedding of *Vikas Sangem & Dr. Sai Madhuri Anna* ❤️\n\n📅 Sunday, 22 November 2026\n🕘 Muhurtham: 9:49 AM\n📍 " + VENUE + "\n\n💌 Open our invitation:\n"
+    },
+    te: {
+      musicOn: "సంగీతం ఆన్", musicOff: "సంగీతం ఆఫ్", toggle: "English",
+      tap: "తెరవడానికి తాకండి", revealed: "ఆదివారం · 22 నవంబర్ 2026 · ఉదయం 9:49",
+      greetCover: function (n) { return n + " గారికి,"; },
+      greetHero: function (n) { return n + " గారికి సకుటుంబ ఆహ్వానం"; },
+      share: "*సంగెం వికాస్ & డా. అన్నా సాయి మాధురి* ల వివాహ మహోత్సవానికి మిమ్మల్ని సకుటుంబంగా ఆహ్వానిస్తున్నాము ❤️\n\n📅 ఆదివారం, 22 నవంబర్ 2026\n🕘 ముహూర్తం: ఉదయం 9:49\n📍 బండారు గార్డెన్స్, హైదరాబాద్ రోడ్, నల్గొండ\n\n💌 ఆహ్వాన పత్రిక:\n"
+    }
+  };
+
+  var params = new URLSearchParams(location.search);
+  var guest = (params.get("to") || "").replace(/\s+/g, " ").trim().slice(0, 40);
+  var lang = params.get("lang") === "te" ? "te" : params.get("lang") === "en" ? "en" : null;
+  if (!lang) { try { lang = localStorage.getItem("lang"); } catch (e) {} }
+  if (lang !== "te") lang = "en";
+
+  var textEls = document.querySelectorAll("[data-i18n]"), htmlEls = document.querySelectorAll("[data-i18n-html]");
+  textEls.forEach(function (el) { el.dataset.en = el.textContent; });
+  htmlEls.forEach(function (el) { el.dataset.en = el.innerHTML; });
+
+  function shareLink() { return BASE + (lang === "te" ? "?lang=te" : ""); }
+  function applyLang() {
+    document.documentElement.lang = lang === "te" ? "te" : "en";
+    textEls.forEach(function (el) {
+      var k = el.dataset.i18n;
+      el.textContent = lang === "te" && k in TE ? TE[k] : el.dataset.en;
+      el.hidden = el.textContent === "" || (el.id === "count-done" && !countDone);
+    });
+    htmlEls.forEach(function (el) {
+      var k = el.dataset.i18nHtml;
+      el.innerHTML = lang === "te" && k in TE ? TE[k] : el.dataset.en;
+    });
+    var ui = UI[lang];
+    document.querySelectorAll("[data-lang-toggle]").forEach(function (b) {
+      b.textContent = ui.toggle;
+      b.setAttribute("aria-label", lang === "te" ? "Switch to English" : "తెలుగులో చూడండి");
+      b.style.fontFamily = lang === "te" ? "var(--font-sans)" : "var(--font-telugu)";
+    });
+    setMusicUI(Music.playing());
+    $("seal-status").textContent = seal.classList.contains("open") ? ui.revealed : ui.tap;
+    if (guest) {
+      [["greet-cover", ui.greetCover], ["greet-hero", ui.greetHero]].forEach(function (g) {
+        var el = $(g[0]);
+        if (el) { el.textContent = g[1](guest); el.hidden = false; }
+      });
+    }
+    $("share-wa").href = "https://wa.me/?text=" + encodeURIComponent(ui.share + shareLink());
+  }
+  document.querySelectorAll("[data-lang-toggle]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      lang = lang === "te" ? "en" : "te";
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+      applyLang();
+    });
+  });
 
   /* ---------- Generated music: veena melody in raga Mohanam over a tanpura drone ---------- */
   var Music = (function () {
@@ -399,7 +575,6 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     var song = [].concat(A, B, A, C, B, D);
     var droneBeat = 0;
     function hz(semi) { return SA * Math.pow(2, semi / 12); }
-
     function impulse(seconds) {
       var len = ctx.sampleRate * seconds, buf = ctx.createBuffer(2, len, ctx.sampleRate);
       for (var c = 0; c < 2; c++) {
@@ -417,7 +592,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
       lp.type = "lowpass";
       lp.frequency.setValueAtTime(freq * 7, t);
       lp.frequency.exponentialRampToValueAtTime(freq * 1.8, t + dur);
-      [[ "triangle", 1, 1 ], [ "sine", 2, .35 ], [ "sine", 3, .12 ]].forEach(function (h) {
+      [["triangle", 1, 1], ["sine", 2, .35], ["sine", 3, .12]].forEach(function (h) {
         var o = ctx.createOscillator(), g = ctx.createGain();
         o.type = h[0];
         var f = freq * h[1];
@@ -448,7 +623,6 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
       while (nextTime < ctx.currentTime + .3) {
         var n = song[step % song.length], len = n[1] * beat;
         if (n[0] !== null) pluck(hz(n[0]), nextTime, len, .16, n[1] >= 2);
-        // tanpura cycle: Pa Sa' Sa' Sa, one string per beat
         var cyc = [hz(-5), hz(0), hz(0), hz(-12)];
         var beatsIn = Math.floor(n[1]) || 0;
         for (var b = 0; b < Math.max(1, beatsIn); b++) {
@@ -487,9 +661,10 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
 
   var musicBtn = $("music-btn"), wantMusic = false;
   function setMusicUI(on) {
+    var ui = UI[lang];
     musicBtn.setAttribute("aria-pressed", on ? "true" : "false");
     musicBtn.setAttribute("aria-label", on ? "Turn music off" : "Turn music on");
-    $("music-label").textContent = on ? "Music on" : "Music off";
+    $("music-label").textContent = on ? ui.musicOn : ui.musicOff;
   }
   function musicOn() { if (Music.start()) { wantMusic = true; setMusicUI(true); } }
   function musicOff() { wantMusic = false; Music.stop(); setMusicUI(false); }
@@ -530,16 +705,39 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     if (seal.classList.contains("open")) return;
     seal.classList.add("open");
     seal.setAttribute("aria-expanded", "true");
-    seal.setAttribute("aria-label", "Wedding date: Sunday, 22 November 2026");
-    $("seal-status").textContent = "Sunday · 22 November 2026 · 9:49 AM";
+    seal.setAttribute("aria-label", "Wedding date: Sunday, 22 November 2026, 9:49 AM");
+    $("seal-status").textContent = UI[lang].revealed;
     if (navigator.vibrate) try { navigator.vibrate(30); } catch (e) {}
   });
 
+  /* ---------- Add to calendar ---------- */
+  var gcal = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    "&text=" + encodeURIComponent("Vikas & Sai Madhuri's Wedding") +
+    "&dates=20261122T041900Z/20261122T073000Z&ctz=Asia/Kolkata" +
+    "&location=" + encodeURIComponent(VENUE) +
+    "&details=" + encodeURIComponent("Muhurtham at 9:49 AM IST.\nInvitation: " + BASE);
+  $("cal-google").href = gcal;
+  if (/android/i.test(navigator.userAgent)) {
+    var row = $("cal-row"), g = $("cal-google"), a = $("cal-apple");
+    row.insertBefore(g, a);
+    g.classList.replace("outline", "dark"); a.classList.replace("dark", "outline");
+  }
+
+  /* ---------- Share ---------- */
+  if (navigator.share) {
+    var more = $("share-more");
+    more.hidden = false;
+    more.addEventListener("click", function () {
+      navigator.share({ title: "Vikas & Sai Madhuri · Wedding Invitation", text: UI[lang].share, url: shareLink() }).catch(function () {});
+    });
+  }
+
   /* ---------- Countdown ---------- */
+  var countDone = false;
   function pad(n) { return (n < 10 ? "0" : "") + n; }
   function tick() {
     var diff = TARGET - Date.now();
-    if (diff <= 0) { $("clock").hidden = true; $("count-done").hidden = false; return; }
+    if (diff <= 0) { countDone = true; $("clock").hidden = true; $("count-done").hidden = false; return; }
     var s = Math.floor(diff / 1000);
     $("cd-d").textContent = Math.floor(s / 86400);
     $("cd-h").textContent = pad(Math.floor(s / 3600) % 24);
@@ -547,6 +745,8 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     $("cd-s").textContent = pad(s % 60);
     setTimeout(tick, 1000);
   }
+
+  applyLang();
   tick();
 })();
 </script>

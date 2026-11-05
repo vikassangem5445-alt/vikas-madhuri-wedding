@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Vikas & Sai Madhuri//Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:vikas-madhuri-wedding-20261122@vikassangem5445-alt.github.io
+DTSTAMP:20261105T000000Z
+DTSTART:20261122T041900Z
+DTEND:20261122T073000Z
+SUMMARY:Vikas & Sai Madhuri's Wedding
+LOCATION:Bandaru Gardens\, Hyderabad Road\, Nalgonda
+DESCRIPTION:Muhurtham at 9:49 AM IST.\nInvitation: https://vikassangem5445-alt.github.io/vikas-madhuri-wedding/
+URL:https://vikassangem5445-alt.github.io/vikas-madhuri-wedding/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Vikas & Sai Madhuri's Wedding is tomorrow
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Muhurtham at 9:49 AM - Bandaru Gardens\, Nalgonda
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

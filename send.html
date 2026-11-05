@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Send Invitations</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root {
+  --paper: oklch(96.5% .016 45); --ivory: oklch(98.5% .008 60); --rose: oklch(70% .08 32);
+  --rose-deep: oklch(50% .09 20); --ink: oklch(30% .04 20); --muted: oklch(47% .045 22);
+  --rg-dark: linear-gradient(135deg, oklch(64% .09 38), oklch(50% .1 22) 55%, oklch(40% .085 15));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink); font: 300 17px/1.6 "Jost", system-ui, sans-serif;
+  padding: calc(1.5rem + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) calc(2rem + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
+}
+main { max-width: 28rem; margin-inline: auto; display: grid; gap: 1.25rem; }
+h1 { font: italic 400 2.2rem/1.1 "Cormorant Garamond", serif; margin: 0; color: var(--rose-deep); }
+p { margin: 0; }
+.muted { color: var(--muted); font-size: .95rem; }
+label { display: grid; gap: .4rem; font-weight: 400; font-size: .9rem; }
+input, select {
+  font: inherit; font-size: 1.05rem; min-height: 52px; padding: 0 1rem; width: 100%;
+  border: 1px solid oklch(70% .08 32 / .6); border-radius: 10px; background: var(--ivory); color: var(--ink);
+}
+input:focus, select:focus { outline: 2px solid var(--rose-deep); outline-offset: 1px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.seg button { min-height: 48px; border-radius: 10px; border: 1px solid oklch(70% .08 32 / .6); background: var(--ivory); color: var(--ink); font: inherit; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--rose-deep); color: var(--ivory); border-color: var(--rose-deep); }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: .5rem; min-height: 54px; border-radius: 999px;
+  border: 0; font: 500 .85rem "Jost", sans-serif; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; cursor: pointer;
+}
+.btn.primary { background: var(--rg-dark); color: var(--ivory); }
+.btn.secondary { background: var(--ivory); color: var(--rose-deep); border: 1px solid var(--rose); }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.preview { background: var(--ivory); border: 1px solid oklch(70% .08 32 / .4); border-radius: 12px; padding: 1rem; white-space: pre-wrap; font-size: .9rem; word-break: break-word; }
+.link { font-size: .85rem; color: var(--rose-deep); word-break: break-all; user-select: all; }
+#status { min-height: 1.5em; font-size: .9rem; color: var(--rose-deep); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Send personal invitations</h1>
+  <p class="muted">Type a guest's name. Their invitation will open with “Dear &lt;name&gt;”. Then send it on WhatsApp.</p>
+  <label for="name">Guest name
+    <input id="name" autocomplete="off" placeholder="e.g. Ramesh Uncle" maxlength="40">
+  </label>
+  <div>
+    <p style="font-weight:400;font-size:.9rem;margin-bottom:.4rem">Language</p>
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" id="lang-en" aria-pressed="true">English</button>
+      <button type="button" id="lang-te" aria-pressed="false">తెలుగు</button>
+    </div>
+  </div>
+  <label for="phone">WhatsApp number (optional)
+    <input id="phone" type="tel" inputmode="tel" placeholder="e.g. 98765 43210" autocomplete="off">
+  </label>
+  <a class="btn primary" id="send" target="_blank" rel="noopener" aria-disabled="true">Send on WhatsApp</a>
+  <button type="button" class="btn secondary" id="copy">Copy link</button>
+  <p id="status" aria-live="polite"></p>
+  <p class="muted">Message preview</p>
+  <div class="preview" id="preview"></div>
+  <p class="link" id="link"></p>
+  <p class="muted">Without a number, WhatsApp opens so you can pick the contact. Indian numbers get +91 added automatically.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var BASE = new URL("./", location.href).href;
+  var lang = "en";
+  var MSG = {
+    en: function (n, url) {
+      return "Dear " + n + ",\n\nWith immense joy, we invite you and your family to the wedding of *Vikas Sangem & Dr. Sai Madhuri Anna* ❤️\n\n📅 Sunday, 22 November 2026\n🕘 Muhurtham: 9:49 AM\n📍 Bandaru Gardens, Hyderabad Road, Nalgonda\n\nYour presence and blessings will mean the world to us.\n\n💌 Your invitation:\n" + url + "\n\nWith love and warm regards,\nVikas & Family";
+    },
+    te: function (n, url) {
+      return n + " గారికి,\n\n*సంగెం వికాస్ & డా. అన్నా సాయి మాధురి* ల వివాహ మహోత్సవానికి మిమ్మల్ని సకుటుంబ సపరివార సమేతంగా ఆహ్వానిస్తున్నాము ❤️\n\n📅 ఆదివారం, 22 నవంబర్ 2026\n🕘 ముహూర్తం: ఉదయం 9:49\n📍 బండారు గార్డెన్స్, హైదరాబాద్ రోడ్, నల్గొండ\n\nమీ రాక, మీ ఆశీస్సులే మాకు కానుక.\n\n💌 మీ ఆహ్వాన పత్రిక:\n" + url + "\n\nఇట్లు,\nవికాస్ & కుటుంబం";
+    }
+  };
+  function update() {
+    var name = $("name").value.replace(/\s+/g, " ").trim();
+    var url = BASE + (name ? "?to=" + encodeURIComponent(name) : "") + (lang === "te" ? (name ? "&" : "?") + "lang=te" : "");
+    var text = MSG[lang](name || "…", url);
+    $("preview").textContent = text;
+    $("link").textContent = url;
+    var digits = $("phone").value.replace(/\D/g, "");
+    if (digits.length === 10) digits = "91" + digits;
+    $("send").href = "https://wa.me/" + (digits.length >= 11 ? digits : "") + "?text=" + encodeURIComponent(text);
+    $("send").setAttribute("aria-disabled", name ? "false" : "true");
+    return { url: url, text: text };
+  }
+  function setLang(l) {
+    lang = l;
+    $("lang-en").setAttribute("aria-pressed", l === "en");
+    $("lang-te").setAttribute("aria-pressed", l === "te");
+    update();
+  }
+  $("lang-en").addEventListener("click", function () { setLang("en"); });
+  $("lang-te").addEventListener("click", function () { setLang("te"); });
+  $("name").addEventListener("input", update);
+  $("phone").addEventListener("input", update);
+  $("send").addEventListener("click", function () {
+    $("status").textContent = "Opening WhatsApp…";
+    setTimeout(function () { $("name").value = ""; $("phone").value = ""; update(); $("name").focus(); $("status").textContent = "Ready for the next guest."; }, 1500);
+  });
+  $("copy").addEventListener("click", function () {
+    var u = update().url;
+    navigator.clipboard.writeText(u).then(function () { $("status").textContent = "Link copied."; },
+      function () { $("status").textContent = "Couldn't copy automatically. Long-press the link below to copy it."; });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
