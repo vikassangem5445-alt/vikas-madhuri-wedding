@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#4A1A1C">
+<title>Choose the Music</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root {
+  --paper: oklch(97% .018 85); --card: oklch(99% .008 85); --gold: oklch(70% .1 78); --maroon: oklch(42% .12 25);
+  --wine: oklch(26% .08 20); --ink: oklch(27% .05 30); --muted: oklch(45% .05 40);
+  --rg-dark: linear-gradient(135deg, oklch(52% .13 35), oklch(42% .13 25) 55%, oklch(34% .1 20));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink); font: 300 16px/1.55 "Jost", system-ui, sans-serif;
+  padding: calc(1.5rem + env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) calc(2.5rem + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));
+}
+main { max-width: 32rem; margin-inline: auto; display: grid; gap: 1rem; }
+h1 { font: italic 400 2.3rem/1.1 "Cormorant Garamond", serif; margin: 0; color: var(--maroon); }
+h2 { font: 500 1.35rem/1.2 "Cormorant Garamond", serif; margin: 0; color: var(--ink); }
+.sec { font-weight: 500; letter-spacing: .2em; text-transform: uppercase; font-size: .72rem; color: var(--maroon); margin-top: 1.25rem; }
+p { margin: 0; }
+.muted { color: var(--muted); font-size: .93rem; }
+.card {
+  background: var(--card); border: 1px solid color-mix(in oklab, var(--gold) 45%, transparent); border-radius: 14px;
+  padding: 1rem; display: grid; grid-template-columns: auto 1fr auto; gap: .9rem; align-items: center;
+}
+.card.on { border-color: var(--maroon); box-shadow: 0 10px 30px -14px color-mix(in oklab, var(--maroon) 60%, transparent); }
+.num { width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; background: var(--rg-dark); color: #fff; font-weight: 500; }
+.info { min-width: 0; display: grid; gap: .15rem; }
+.info .muted { font-size: .85rem; }
+.tag { font-size: .7rem; color: var(--maroon); font-weight: 500; }
+.play {
+  width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--maroon); background: var(--card); color: var(--maroon);
+  display: grid; place-items: center; cursor: pointer;
+}
+.card.on .play { background: var(--maroon); color: #fff; }
+.play svg { width: 22px; height: 22px; }
+a.card { text-decoration: none; color: inherit; }
+a.card .play { border-color: var(--gold); color: var(--maroon); }
+:focus-visible { outline: 2px solid var(--maroon); outline-offset: 3px; }
+.back { color: var(--maroon); font-weight: 400; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Choose the music</h1>
+  <p class="muted">Tap ▶ to listen. Only one plays at a time. Turn your phone's volume up. Then tell me the number you like.</p>
+
+  <p class="sec">Composed for your invitation</p>
+  <div id="synth"></div>
+
+  <p class="sec">Real recordings (listen on YouTube or Pixabay)</p>
+  <p class="muted">These open in a new tab. If you like one, send me the mp3 file. Use an mp3 you have permission to share, or a royalty-free one.</p>
+  <div id="real"></div>
+
+  <p class="muted" style="margin-top:1rem"><a class="back" href="./">← Back to the invitation</a></p>
+</main>
+<script src="music.js"></script>
+<script>
+(function () {
+  "use strict";
+  var PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var STOP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>';
+  var OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+  var synth = [
+    ["flute", "Flute + tanpura", "Raga Kalyani · slow, calm, soft temple bell", "Playing on the invitation now"],
+    ["veena", "Veena + tanpura", "Raga Mohanam · slow, graceful plucked strings", ""],
+    ["duet", "Flute + veena duet", "Raga Hamsadhwani · flute sings, veena answers", ""],
+    ["shehnai", "Shehnai + tanpura", "Raga Yaman Kalyan · soft, slow wedding reed", ""],
+    ["nadaswaram", "Nadaswaram + thavil", "Raga Hamsadhwani · festive mangala vadyam", ""],
+    ["santoor", "Santoor + soft tabla", "Raga Bhupali · gentle, shimmering", ""]
+  ];
+  var yt = function (q) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent(q); };
+  var real = [
+    ["Seetha Kalyana Vaibhogame", "Tyagaraja · the classic Telugu wedding song, instrumental", yt("Seetha Kalyana Vaibhogame instrumental veena flute")],
+    ["Brahmam Okkate / Bhavamulona", "Annamacharya · instrumental on veena or flute", yt("Annamacharya Brahmam Okkate instrumental veena")],
+    ["Mangala vadyam", "Real nadaswaram wedding recording", yt("mangala vadyam nadaswaram wedding instrumental")],
+    ["Royalty-free Indian wedding music", "Pixabay Music · free to use", "https://pixabay.com/music/search/indian%20wedding/"]
+  ];
+  var current = null, currentCard = null;
+  function stopCurrent() {
+    if (current) { current.destroy(); current = null; }
+    if (currentCard) { currentCard.classList.remove("on"); currentCard.querySelector(".play").innerHTML = PLAY; currentCard.querySelector(".play").setAttribute("aria-label", "Play " + currentCard.dataset.name); currentCard = null; }
+  }
+  var box = document.getElementById("synth");
+  synth.forEach(function (s, i) {
+    var card = document.createElement("div");
+    card.className = "card"; card.dataset.name = s[1];
+    card.innerHTML = '<span class="num">' + (i + 1) + '</span><div class="info"><h2></h2><p class="muted"></p>' + (s[3] ? '<span class="tag"></span>' : "") + '</div><button type="button" class="play">' + PLAY + '</button>';
+    card.querySelector("h2").textContent = s[1];
+    card.querySelector(".muted").textContent = s[2];
+    if (s[3]) card.querySelector(".tag").textContent = s[3];
+    var btn = card.querySelector(".play");
+    btn.setAttribute("aria-label", "Play " + s[1]);
+    btn.addEventListener("click", function () {
+      var was = currentCard === card;
+      stopCurrent();
+      if (was) return;
+      current = WeddingMusic.create(s[0]);
+      if (!current.start()) return;
+      currentCard = card; card.classList.add("on"); btn.innerHTML = STOP; btn.setAttribute("aria-label", "Stop " + s[1]);
+    });
+    box.appendChild(card);
+  });
+  var rbox = document.getElementById("real");
+  real.forEach(function (r, i) {
+    var a = document.createElement("a");
+    a.className = "card"; a.href = r[2]; a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = '<span class="num">' + (i + 7) + '</span><div class="info"><h2></h2><p class="muted"></p></div><span class="play">' + OPEN + '</span>';
+    a.querySelector("h2").textContent = r[0];
+    a.querySelector(".muted").textContent = r[1];
+    a.addEventListener("click", stopCurrent);
+    rbox.appendChild(a);
+  });
+  box.style.display = rbox.style.display = "grid";
+  box.style.gap = rbox.style.gap = ".75rem";
+  document.addEventListener("visibilitychange", function () { if (document.hidden) stopCurrent(); });
+})();
+</script>
+</body>
+</html>
