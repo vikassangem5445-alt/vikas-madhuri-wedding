@@ -1,9 +1,40 @@
 /* Wedding music engine: original compositions synthesised in the browser with Web Audio. */
 (function () {
   "use strict";
-  var STYLES = ["flute", "veena", "duet", "shehnai", "nadaswaram", "santoor"];
+  var STYLES = ["track", "flute", "veena", "duet", "shehnai", "nadaswaram", "santoor"];
+
+  /* Recorded track (royalty-free, Pixabay) played through an <audio> element, which also plays in iPhone silent mode */
+  function createTrack() {
+    var audio = new Audio("wedding-music.m4a"), fade;
+    audio.loop = true; audio.preload = "auto"; audio.setAttribute("playsinline", "");
+    var playing = false;
+    function ramp(to, ms, done) {
+      clearInterval(fade);
+      var from = audio.volume, steps = Math.max(1, Math.round(ms / 50)), i = 0;
+      fade = setInterval(function () {
+        i++;
+        try { audio.volume = Math.min(1, Math.max(0, from + (to - from) * i / steps)); } catch (e) {}
+        if (i >= steps) { clearInterval(fade); if (done) done(); }
+      }, 50);
+    }
+    return {
+      style: "track",
+      start: function () {
+        playing = true;
+        try { audio.volume = 0; } catch (e) {}
+        var p = audio.play();
+        if (p && p.catch) p.catch(function () { playing = false; });
+        ramp(.9, 2500);
+        return true;
+      },
+      stop: function () { playing = false; ramp(0, 400, function () { audio.pause(); }); },
+      destroy: function () { playing = false; clearInterval(fade); audio.pause(); },
+      playing: function () { return playing; }
+    };
+  }
 
   function create(STYLE) {
+    if (STYLE === "track") return createTrack();
     if (STYLES.indexOf(STYLE) < 0) STYLE = "flute";
     var SA = 293.66; // D4
     function hz(semi) { return SA * Math.pow(2, semi / 12); }

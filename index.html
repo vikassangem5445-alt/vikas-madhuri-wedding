@@ -339,7 +339,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     <h1 class="cover-names"><span class="rg-light" data-i18n="groomFull">Vikas Sangem</span><span class="amp">&amp;</span><span class="rg-light" data-i18n="brideFull">Dr. Sai Madhuri Anna</span></h1>
     <svg class="ornament flip"><use href="#orn"/></svg>
     <button type="button" id="open-btn" class="btn eyebrow" data-i18n="open">Open Invitation</button>
-    <p class="cover-note" data-i18n="coverNote">Soft music will play · tap the music button to turn it off</p>
+    <p class="cover-note" data-i18n="coverNote">Music will play · tap the music button to turn it off</p>
   </div>
 </div>
 
@@ -511,7 +511,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
     groomFull: "చి. సంగెం వికాస్",
     brideFull: "చి.ల.సౌ. డా. అన్నా సాయి మాధురి",
     open: "ఆహ్వానం తెరవండి",
-    coverNote: "మృదువైన సంగీతం వినిపిస్తుంది · ఆపాలంటే సంగీతం బటన్ నొక్కండి",
+    coverNote: "సంగీతం వినిపిస్తుంది · ఆపాలంటే సంగీతం బటన్ నొక్కండి",
     navInv: "ఆహ్వానం", navDate: "తేదీ", navDetails: "వివరాలు", navSave: "క్యాలెండర్", navLove: "ప్రేమతో",
     blessing: "పెద్దల ఆశీస్సులతో",
     groomHero: "చి. సంగెం వికాస్",
@@ -618,7 +618,7 @@ footer .eyebrow { font-size: .6rem; opacity: .7; }
   });
 
   /* ---------- Music (engine in music.js; preview others with ?music=veena etc.) ---------- */
-  var Music = WeddingMusic.create(params.get("music") || "flute");
+  var Music = WeddingMusic.create(params.get("music") || "track");
 
   var musicBtn = $("music-btn"), wantMusic = false;
   function setMusicUI(on) {
